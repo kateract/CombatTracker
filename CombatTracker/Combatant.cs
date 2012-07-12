@@ -35,8 +35,22 @@ namespace CombatTracker
 
         public string CombatantName
         {
-            get { return _name; }
-            set { _name = value; }
+            get 
+            { 
+                return _name; 
+            }
+            set 
+            {
+                _name = value;
+                _control.CombatantName = _name;
+            }
+        }
+
+        private CombatantControl _control;
+
+        public CombatantControl GetCombatantControl()
+        {
+            return _control;
         }
 
 

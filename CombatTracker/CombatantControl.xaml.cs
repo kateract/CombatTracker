@@ -20,7 +20,6 @@ namespace CombatTracker
     public partial class CombatantControl : UserControl
     {
         private int position;
-
         public int Position
         {
             get { return position; }
@@ -35,6 +34,7 @@ namespace CombatTracker
             }
             }
         }
+        
         private string _name;
         public string CombatantName {
             get
@@ -47,9 +47,8 @@ namespace CombatTracker
                 this.lblName.Content = _name;
             }
         }
-        public DataFormat CombatantDataFormat { get; set; }
+        
         public ListBox lb;
-
         public CombatantControl()
         {
             InitializeComponent();

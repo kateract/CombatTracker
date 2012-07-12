@@ -19,6 +19,9 @@ namespace CombatTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int _curpos;
+        private bool _dropOnControl;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,10 +36,22 @@ namespace CombatTracker
             ListBox lb = sender as ListBox;
             CombatantControl cmb = e.Data.GetData("Object") as CombatantControl;
             ListBox lbp = cmb.lb;
-            lbp.Items.Remove(cmb);
-            lb.Items.Add(cmb);
-            cmb.lb = lb;
-            e.Effects = DragDropEffects.Move;
+            if (lb == lbp)
+            {
+                lb.Items.Remove(cmb);
+                lb.Items.Insert(_curpos, cmb);
+            }
+            else
+            {
+                lbp.Items.Remove(cmb);
+                if (_dropOnControl && _curpos > lb.Items.Count)
+                    lb.Items.Insert(lb.Items.Count,cmb);
+                else
+                    lb.Items.Insert(_curpos,cmb);
+                cmb.lb = lb;
+                e.Effects = DragDropEffects.Move;
+                
+            }
             for (int i = 0; i < lb.Items.Count; i++)
             {
                 ((CombatantControl)lb.Items[i]).Position = i;
@@ -55,6 +70,7 @@ namespace CombatTracker
 
                 CombatantControl c = new CombatantControl(i);
                 c.MouseMove += new MouseEventHandler(c_MouseMove);
+                c.PreviewDrop += new DragEventHandler(c_PreviewDrop);
                 c.lb = listBox1;
                 c.Position = listBox1.Items.Count;
                 this.listBox1.Items.Add(c);
@@ -62,15 +78,28 @@ namespace CombatTracker
             }
         }
 
+        void c_PreviewDrop(object sender, DragEventArgs e)
+        {
+            CombatantControl c = sender as CombatantControl;
+            _curpos = c.Position;
+            _dropOnControl = true;
+        }
+
+        void c_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
         void c_MouseMove(object sender, MouseEventArgs e)
         {
+            CombatantControl c = sender as CombatantControl;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                CombatantControl c = sender as CombatantControl;
                 DataObject data = new DataObject();
                 data.SetData(DataFormats.StringFormat, c.CombatantName);
                 data.SetData("Object", c);
-                DragDrop.DoDragDrop(c, data, DragDropEffects.Move);
+                DragDrop.DoDragDrop(c,
+                data, DragDropEffects.Move);
             }
         }
     }
