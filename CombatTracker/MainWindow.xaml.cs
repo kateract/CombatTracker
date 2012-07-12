@@ -44,13 +44,14 @@ namespace CombatTracker
             else
             {
                 lbp.Items.Remove(cmb);
-                if (_dropOnControl && _curpos > lb.Items.Count)
-                    lb.Items.Insert(lb.Items.Count,cmb);
+                if (_dropOnControl && _curpos < lb.Items.Count)
+                    lb.Items.Insert(_curpos, cmb);
                 else
-                    lb.Items.Insert(_curpos,cmb);
+                    lb.Items.Insert(lb.Items.Count,cmb);
+                
                 cmb.lb = lb;
                 e.Effects = DragDropEffects.Move;
-                
+                _dropOnControl = false;
             }
             for (int i = 0; i < lb.Items.Count; i++)
             {
