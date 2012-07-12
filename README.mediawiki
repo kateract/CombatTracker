@@ -1,2 +1,2 @@
-*CombatTracker*
+=CombatTracker=
 WPF Combat Tracker
