@@ -28,6 +28,29 @@ namespace CombatTracker
                 position = value;
             }
         }
+
+        private int _curHP;
+        public int CurrentHP
+        {
+            private get { return _curHP; }
+            set 
+            { 
+                _curHP = value;
+                lblCurHP.Content = _curHP.ToString();
+            }
+        }
+
+        private int _maxHP;
+        public int MaxHP
+        {
+            private get { return _maxHP; }
+            set 
+            { 
+                _maxHP = value;
+                lblMaxHP.Content = _maxHP.ToString();
+            }
+        }
+               
         
         private string _name;
         public string CombatantName {

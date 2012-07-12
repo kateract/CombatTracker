@@ -8,7 +8,6 @@ namespace CombatTracker
     class Combatant 
     {
         private int _maxHP;
-
         public int MaxHP
         {
             get { return _maxHP; }
@@ -16,7 +15,6 @@ namespace CombatTracker
         }
 
         private int _curHP;
-
         public int CurrentHP
         {
             get { return _curHP; }
@@ -24,7 +22,6 @@ namespace CombatTracker
         }
 
         private int _curTempHP;
-
         public int CurrentTempHP
         {
             get { return _curTempHP; }
@@ -32,7 +29,6 @@ namespace CombatTracker
         }
 
         private string _name;
-
         public string CombatantName
         {
             get 
@@ -47,12 +43,62 @@ namespace CombatTracker
         }
 
         private CombatantControl _control;
-
         public CombatantControl GetCombatantControl()
         {
             return _control;
         }
 
+        private int _curHS;
+        public int CurrentHealingSUrges
+        {
+            get { return _curHS; }
+            set { _curHS = value; }
+        }
 
+        private int _maxHS;
+        public int MaxHealingSurges
+        {
+            get { return _maxHS; }
+            set { _maxHS = value; }
+        }
+
+        public int BloodiedValue
+        {
+            get { return _maxHP / 2; }
+        }
+
+        private int _hsBonus;
+        public int HealingSurgeBonus
+        {
+            get { return _hsBonus; }
+            set { _hsBonus = value; }
+        }
+
+        public int HealingSurgeValue
+        {
+            get { return _hsBonus + (BloodiedValue / 2); }
+        }
+
+        public enum Condition
+        {
+            BLOODIED,
+            PRONE,
+            BLIND,
+            IMMOBILIZED,
+            RESTRAINED,
+            GRAPPLED,
+            SLOWED,
+            DAZED,
+            STUNNED,
+            UNCONCIOUS,
+            DYING,
+            HELPLESS
+        }
+
+        public Combatant()
+        {
+            this._control = new CombatantControl();
+
+        }
     }
 }
