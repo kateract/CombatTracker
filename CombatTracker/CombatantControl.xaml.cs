@@ -89,5 +89,12 @@ namespace CombatTracker
 
             
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteRequested(this, e);
+        }
+        public event DeleteRequestedHandler DeleteRequested;
+        public delegate void DeleteRequestedHandler(object sender, EventArgs e);
     }
 }

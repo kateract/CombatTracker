@@ -16,4 +16,9 @@
            </Canvas.Clip>
         </Canvas>
     </Grid>
+    <UserControl.ContextMenu>
+        <ContextMenu Name="cmbContextMenu">
+            <MenuItem Header="Delete" Click="MenuItem_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
 </UserControl>

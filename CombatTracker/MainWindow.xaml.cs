@@ -70,9 +70,22 @@ namespace CombatTracker
             CombatantControl cc = c.GetCombatantControl();
             cc.MouseMove += new MouseEventHandler(c_MouseMove);
             cc.PreviewDrop += new DragEventHandler(c_PreviewDrop);
+            cc.DeleteRequested += new CombatantControl.DeleteRequestedHandler(cc_DeleteRequested); ;
             cc.lb = listBox1;
             cc.Position = listBox1.Items.Count;
             this.listBox1.Items.Add(cc);
+        }
+
+        void cc_DeleteRequested(object sender, EventArgs e)
+        {
+            removeCombatant(sender as CombatantControl);
+        }
+
+
+
+        void removeCombatant(CombatantControl c)
+        {
+            c.lb.Items.RemoveAt(c.Position);
         }
 
         void c_PreviewDrop(object sender, DragEventArgs e)
@@ -114,7 +127,6 @@ namespace CombatTracker
                         addCombatant(pc);
                     }
                     break;
-
             }
         }
     }
