@@ -23,15 +23,9 @@ namespace CombatTracker
         public int Position
         {
             get { return position; }
-            set { position = value;
-            if (position % 2 == 1)
-            {
-                this.Background = Brushes.LightCyan;
-            }
-            else
-            {
-                this.Background = Brushes.White;
-            }
+            set
+            { 
+                position = value;
             }
         }
         
@@ -52,6 +46,9 @@ namespace CombatTracker
         public CombatantControl()
         {
             InitializeComponent();
+            this.Background = Brushes.White;
+            this.BorderBrush = Brushes.Black;
+            this.canvas1.Background = Brushes.RosyBrown;
         }
         public CombatantControl(int num) : this()
         {

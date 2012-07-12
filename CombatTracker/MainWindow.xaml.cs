@@ -36,23 +36,17 @@ namespace CombatTracker
             ListBox lb = sender as ListBox;
             CombatantControl cmb = e.Data.GetData("Object") as CombatantControl;
             ListBox lbp = cmb.lb;
-            if (lb == lbp)
-            {
-                lb.Items.Remove(cmb);
+
+            lbp.Items.Remove(cmb);
+            if (_dropOnControl && _curpos < lb.Items.Count)
                 lb.Items.Insert(_curpos, cmb);
-            }
             else
-            {
-                lbp.Items.Remove(cmb);
-                if (_dropOnControl && _curpos < lb.Items.Count)
-                    lb.Items.Insert(_curpos, cmb);
-                else
-                    lb.Items.Insert(lb.Items.Count,cmb);
+                lb.Items.Insert(lb.Items.Count,cmb);
                 
-                cmb.lb = lb;
-                e.Effects = DragDropEffects.Move;
-                _dropOnControl = false;
-            }
+            cmb.lb = lb;
+            e.Effects = DragDropEffects.Move;
+            _dropOnControl = false;
+            
             for (int i = 0; i < lb.Items.Count; i++)
             {
                 ((CombatantControl)lb.Items[i]).Position = i;
