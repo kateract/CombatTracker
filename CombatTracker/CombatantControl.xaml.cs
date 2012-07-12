@@ -64,14 +64,23 @@ namespace CombatTracker
                 this.lblName.Content = _name;
             }
         }
+
+        private string _keywords;
+        public string KeyWords
+        {
+            get { return _keywords; }
+            set
+            {
+                _keywords = value;
+                lblRaceClass.Content = _keywords;
+            }
+        }
         
         public ListBox lb;
         public CombatantControl()
         {
             InitializeComponent();
             this.Background = Brushes.White;
-            this.BorderBrush = Brushes.Black;
-            this.canvas1.Background = Brushes.RosyBrown;
         }
         public CombatantControl(int num) : this()
         {

@@ -3,8 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="719" Width="1095">
     <Grid>
-        <ListBox Height="656" HorizontalAlignment="Left" Margin="12,12,0,0" Name="listBox1" VerticalAlignment="Top" Width="276" AllowDrop="True" />
+        <ListBox Height="639" HorizontalAlignment="Left" Margin="12,29,0,0" Name="listBox1" VerticalAlignment="Top" Width="276" AllowDrop="True" />
         <ListBox AllowDrop="True" Height="272" HorizontalAlignment="Left" Margin="413,70,0,0" Name="listBox2" VerticalAlignment="Top" Width="268" />
         <ListBox Height="269" HorizontalAlignment="Left" Margin="413,399,0,0" Name="listBox3" VerticalAlignment="Top" Width="268" AllowDrop="True" />
+        <Menu Height="23" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="1073">
+            <MenuItem Header="File">
+                <MenuItem Header="Open"  Click="MenuItem_Click"  />
+            </MenuItem>
+            <MenuItem Header="Help" />
+        </Menu>
     </Grid>
 </Window>

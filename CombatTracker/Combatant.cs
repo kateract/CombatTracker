@@ -7,25 +7,66 @@ namespace CombatTracker
 {
     class Combatant 
     {
+        private string _keywords;
+        public string KeyWords
+        {
+            get { return _keywords; }
+            set
+            {
+                _keywords = value;
+                _control.KeyWords = _keywords;
+            }
+        }
+
+        private string _playerRace;
+        public string PlayerRace
+        {
+            get { return _playerRace; }
+            set
+            {
+                _playerRace = value;
+                setCombatantKeywords();
+            }
+        }
+        
+        private string _playerClass;
+        public string PlayerClass
+        {
+            get { return _playerClass; }
+            set 
+            { 
+                _playerClass = value;
+                setCombatantKeywords(); 
+            }
+        }
+
         private int _maxHP;
         public int MaxHP
         {
             get { return _maxHP; }
-            set { _maxHP = value; }
+            set { 
+                _maxHP = value;
+                _control.MaxHP = value;
+            }
         }
 
         private int _curHP;
         public int CurrentHP
         {
             get { return _curHP; }
-            set { _curHP = value; }
+            set { 
+                _curHP = value;
+                _control.CurrentHP = value;
+            }
         }
 
         private int _curTempHP;
         public int CurrentTempHP
         {
             get { return _curTempHP; }
-            set { _curTempHP = value; }
+            set {
+                _curTempHP = value;
+            }
         }
 
         private string _name;
@@ -49,7 +90,7 @@ namespace CombatTracker
         }
 
         private int _curHS;
-        public int CurrentHealingSUrges
+        public int CurrentHealingSurges
         {
             get { return _curHS; }
             set { _curHS = value; }
@@ -99,6 +140,11 @@ namespace CombatTracker
         {
             this._control = new CombatantControl();
 
+        }
+
+        private void setCombatantKeywords()
+        {
+            KeyWords = _playerRace + " " + _playerClass;
         }
     }
 }

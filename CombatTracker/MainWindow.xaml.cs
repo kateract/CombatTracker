@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace CombatTracker
 {
@@ -26,12 +27,13 @@ namespace CombatTracker
         {
             InitializeComponent();
             this.Loaded +=new RoutedEventHandler(MainWindow_Loaded);
-            this.listBox2.Drop += new DragEventHandler(listBox2_Drop);
-            this.listBox1.Drop += new DragEventHandler(listBox2_Drop);
-            this.listBox3.Drop += new DragEventHandler(listBox2_Drop);
+            this.listBox2.Drop += new DragEventHandler(ListBox_Drop);
+            this.listBox1.Drop += new DragEventHandler(ListBox_Drop);
+            this.listBox3.Drop += new DragEventHandler(ListBox_Drop);
+            
         }
 
-        void listBox2_Drop(object sender, DragEventArgs e)
+        void ListBox_Drop(object sender, DragEventArgs e)
         {
             ListBox lb = sender as ListBox;
             CombatantControl cmb = e.Data.GetData("Object") as CombatantControl;
@@ -60,17 +62,17 @@ namespace CombatTracker
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            for (int i = 1; i < 10; i++)
-            {
 
-                CombatantControl c = new CombatantControl(i);
-                c.MouseMove += new MouseEventHandler(c_MouseMove);
-                c.PreviewDrop += new DragEventHandler(c_PreviewDrop);
-                c.lb = listBox1;
-                c.Position = listBox1.Items.Count;
-                this.listBox1.Items.Add(c);
-                
-            }
+        }
+
+        void addCombatant(Combatant c)
+        {
+            CombatantControl cc = c.GetCombatantControl();
+            cc.MouseMove += new MouseEventHandler(c_MouseMove);
+            cc.PreviewDrop += new DragEventHandler(c_PreviewDrop);
+            cc.lb = listBox1;
+            cc.Position = listBox1.Items.Count;
+            this.listBox1.Items.Add(cc);
         }
 
         void c_PreviewDrop(object sender, DragEventArgs e)
@@ -95,6 +97,24 @@ namespace CombatTracker
                 data.SetData("Object", c);
                 DragDrop.DoDragDrop(c,
                 data, DragDropEffects.Move);
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem m = sender as MenuItem;
+            switch (m.Header.ToString())
+            {
+                case "Open":
+                    Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+                    ofd.DefaultExt = "dnd4e";
+                    if (ofd.ShowDialog() == true)
+                    {
+                        PlayerCharacter pc = PlayerCharacter.Load(ofd.FileName);
+                        addCombatant(pc);
+                    }
+                    break;
+
             }
         }
     }
