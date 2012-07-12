@@ -1,2 +1,4 @@
 =CombatTracker=
-WPF Combat Tracker for D&D 4e
+WPF Combat Tracker for D&D 4th Edition
+
+Work in Progress.
