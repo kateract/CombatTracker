@@ -160,6 +160,30 @@ namespace CombatTracker
             {
                 this.lbAttributes.Items.Add(item.att_name + " " + item.value.ToString());
             }
+            foreach (Combatant.power item in c.Powers)
+            {
+                int num = lbPowers.Items.Count;
+                ListBoxItem lbi = new ListBoxItem();
+                lbi.Content = item.name;
+                switch (item.PowerUsage)
+                {
+                    case Combatant.power.PowerUsageType.ATWILL:
+                        lbi.Background = Brushes.Green;
+                        lbi.Foreground = Brushes.White;
+                        break;
+                    case Combatant.power.PowerUsageType.ENCOUNTER:
+                        lbi.Background = Brushes.Red;
+                        lbi.Foreground = Brushes.White;
+                        break;
+                    case Combatant.power.PowerUsageType.DAILY:
+                        lbi.Background = Brushes.DarkGray;
+                        lbi.Foreground = Brushes.White;
+                        break;
+                    default:
+                        break;
+                }
+                lbPowers.Items.Add(lbi);
+            }
         }
     }
 }

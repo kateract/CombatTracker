@@ -170,6 +170,28 @@ namespace CombatTracker
 
             #endregion
         }
- 
+        public List<power> Powers = new List<power>();
+        public class power
+        {
+            public string name;
+            public ActionType action;
+            public enum PowerUsageType
+            {
+                ATWILL,
+                ENCOUNTER,
+                DAILY
+            }
+            public PowerUsageType PowerUsage;
+        }
+
+        public enum ActionType
+        {
+            STANDARD,
+            MOVE,
+            MINOR,
+            FREE,
+            REACTION,
+            INTERRUPT
+        }
     }
 }

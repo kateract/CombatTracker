@@ -19,6 +19,7 @@
         <Label Content="Readied" Height="28" HorizontalAlignment="Left" Margin="319,365,0,0" Name="label2" VerticalAlignment="Top" />
         <Label Content="Initiative" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="label3" VerticalAlignment="Top" />
         <ListBox Height="230" HorizontalAlignment="Left" Margin="798,301,0,0" Name="lbAttributes" VerticalAlignment="Top" Width="263" />
+        <ListBox Height="230" HorizontalAlignment="Left" Margin="798,70,0,0" Name="lbPowers" VerticalAlignment="Top" Width="263" />
     </Grid>
 
 </Window>

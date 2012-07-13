@@ -9,11 +9,9 @@ namespace CombatTracker
 {
     class PlayerCharacter : Combatant
     {
-
-
-
         public static PlayerCharacter Load(string filename)
         {
+
             PlayerCharacter pc = new PlayerCharacter();
             
             FileInfo fi = new FileInfo(filename);
@@ -58,6 +56,65 @@ namespace CombatTracker
                                     pc.PlayerClass = xtr.GetAttribute("name");
                                 if (xtr.GetAttribute("type") == "Race")
                                     pc.PlayerRace = xtr.GetAttribute("name");
+                                if (xtr.GetAttribute("type") == "Power")
+                                {
+                                    power p = new power();
+                                    p.name = xtr.GetAttribute("name");
+                                    xtr.Read();
+                                    while (xtr.Name == "specific")
+                                    {
+                                        if (xtr.GetAttribute("name") == "Power Usage")
+                                        {
+                                            xtr.Read();
+                                            if (xtr.NodeType == XmlNodeType.Text)
+                                            {
+                                                string s = xtr.Value.Trim();
+                                                switch (s[0])
+                                                {
+                                                    case 'A':
+                                                        p.PowerUsage = power.PowerUsageType.ATWILL;
+                                                        break;
+                                                    case 'E':
+                                                        p.PowerUsage = power.PowerUsageType.ENCOUNTER;
+                                                        break;
+                                                    case 'D':
+                                                        p.PowerUsage = power.PowerUsageType.DAILY;
+                                                        break;
+                                                    default:
+                                                        throw new NotImplementedException(s);
+                                                }
+                                            }
+                                        }
+                                        if (xtr.GetAttribute("name") == "Action Type")
+                                        {
+                                            string s = xtr.Value.Trim();
+                                            switch (s.Trim().Substring(0, s.IndexOf(' ')))
+                                            {
+                                                case "Move":
+                                                    break;
+                                                case "Minor":
+                                                    break;
+                                                case "Standard":
+                                                    break;
+                                                case "Immediate":
+                                                    string y = s.Substring(s.Trim().IndexOf(' '), s.Trim().Substring(0, s.IndexOf(' ')).IndexOf(' ') >= 0 ? s.Trim().Substring(0, s.IndexOf(' ')).IndexOf(' ') : s.Trim().Substring(0, s.IndexOf(' ')).Length);
+                                                    if (y == "Interrupt")
+                                                        p.action = ActionType.INTERRUPT;
+                                                    else if (y == "Reaction")
+                                                        p.action = ActionType.REACTION;
+                                                    else
+                                                        throw new NotImplementedException(s);
+                                                    break;
+                                                default:
+                                                    throw new NotImplementedException(s);
+
+                                            }
+                                        }
+                                        xtr.Read();
+                                    }
+                                    pc.Powers.Add(p);
+                                    
+                                }
                             }
 
                             break;
@@ -94,6 +151,5 @@ namespace CombatTracker
 
             return pc;
         }
-
     }
 }
