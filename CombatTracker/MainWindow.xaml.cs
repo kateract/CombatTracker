@@ -23,6 +23,8 @@ namespace CombatTracker
         private int _curpos;
         private bool _dropOnControl;
 
+        public List<Combatant> combatantList = new List<Combatant>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -73,12 +75,16 @@ namespace CombatTracker
             cc.DeleteRequested += new CombatantControl.DeleteRequestedHandler(cc_DeleteRequested); ;
             cc.lb = listBox1;
             cc.Position = listBox1.Items.Count;
+            cc.combatantListIndex = combatantList.Count;
             this.listBox1.Items.Add(cc);
+            combatantList.Add(c);
         }
 
         void cc_DeleteRequested(object sender, EventArgs e)
         {
-            removeCombatant(sender as CombatantControl);
+            CombatantControl cc = sender as CombatantControl;
+            combatantList.RemoveAt(cc.combatantListIndex);
+            removeCombatant(cc);
         }
 
 
@@ -127,6 +133,20 @@ namespace CombatTracker
                         addCombatant(pc);
                     }
                     break;
+            }
+        }
+
+        private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBox1.SelectedIndex >= 0)
+            {
+                CombatantControl cc = listBox1.SelectedItem as CombatantControl;
+                Combatant c = combatantList[cc.combatantListIndex];
+                this.listBox4.Items.Clear();
+                foreach (Combatant.attribute item in c.attList)
+                {
+                    this.listBox4.Items.Add(item.att_name + " " + item.value.ToString());
+                }
             }
         }
     }

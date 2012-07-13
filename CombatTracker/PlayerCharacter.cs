@@ -11,7 +11,6 @@ namespace CombatTracker
     {
 
 
-        public List<attribute> attList = new List<attribute>();
 
         public static PlayerCharacter Load(string filename)
         {
@@ -96,25 +95,5 @@ namespace CombatTracker
             return pc;
         }
 
-        public class attribute : IComparable<attribute>
-        {
-            public string att_name
-            {
-                get { return alias[0]; }
-            }
-            public List<string> alias = new List<string>();
-            public int value;
-
-
-
-            #region IComparable<attribute> Members
-
-            public int CompareTo(attribute other)
-            {
-                return this.att_name.CompareTo(other.att_name);
-            }
-
-            #endregion
-        }
     }
 }

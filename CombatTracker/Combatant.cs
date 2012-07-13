@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CombatTracker
 {
-    class Combatant 
+    public class Combatant 
     {
         private string _keywords;
         public string KeyWords
@@ -120,6 +120,9 @@ namespace CombatTracker
             get { return _hsBonus + (BloodiedValue / 2); }
         }
 
+        public List<attribute> attList = new List<attribute>();
+
+        
         public enum Condition
         {
             BLOODIED,
@@ -146,5 +149,27 @@ namespace CombatTracker
         {
             KeyWords = _playerRace + " " + _playerClass;
         }
+
+        public class attribute : IComparable<attribute>
+        {
+            public string att_name
+            {
+                get { return alias[0]; }
+            }
+            public List<string> alias = new List<string>();
+            public int value;
+
+            
+
+            #region IComparable<attribute> Members
+
+            public int CompareTo(attribute other)
+            {
+                return this.att_name.CompareTo(other.att_name);
+            }
+
+            #endregion
+        }
+ 
     }
 }

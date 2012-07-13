@@ -89,7 +89,7 @@ namespace CombatTracker
 
             
         }
-
+        public int combatantListIndex;
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             DeleteRequested(this, e);
