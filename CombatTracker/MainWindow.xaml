@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="719" Width="1095">
     <Grid>
-        <ListBox Height="598" HorizontalAlignment="Left" Margin="12,70,0,0" Name="listBox1" VerticalAlignment="Top" Width="276" AllowDrop="True" SelectionChanged="listBox1_SelectionChanged" />
-        <ListBox AllowDrop="True" Height="272" HorizontalAlignment="Left" Margin="319,70,0,0" Name="listBox2" VerticalAlignment="Top" Width="268" />
-        <ListBox Height="269" HorizontalAlignment="Left" Margin="319,399,0,0" Name="listBox3" VerticalAlignment="Top" Width="268" AllowDrop="True" />
+        <ListBox Height="598" HorizontalAlignment="Left" Margin="12,70,0,0" Name="lbInitiative" VerticalAlignment="Top" Width="276" AllowDrop="True" />
+        <ListBox AllowDrop="True" Height="272" HorizontalAlignment="Left" Margin="319,70,0,0" Name="lbHolding" VerticalAlignment="Top" Width="268" />
+        <ListBox Height="269" HorizontalAlignment="Left" Margin="319,399,0,0" Name="lbReadied" VerticalAlignment="Top" Width="268" AllowDrop="True" />
         <Menu Height="23" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="1073">
             <MenuItem Header="File">
                 <MenuItem Header="Open"  Click="MenuItem_Click"  />
@@ -18,7 +18,7 @@
         <Label Content="Holding" Height="28" HorizontalAlignment="Left" Margin="319,36,0,0" Name="label1" VerticalAlignment="Top" />
         <Label Content="Readied" Height="28" HorizontalAlignment="Left" Margin="319,365,0,0" Name="label2" VerticalAlignment="Top" />
         <Label Content="Initiative" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="label3" VerticalAlignment="Top" />
-        <ListBox Height="230" HorizontalAlignment="Left" Margin="731,70,0,0" Name="listBox4" VerticalAlignment="Top" Width="263" />
+        <ListBox Height="230" HorizontalAlignment="Left" Margin="798,301,0,0" Name="lbAttributes" VerticalAlignment="Top" Width="263" />
     </Grid>
 
 </Window>

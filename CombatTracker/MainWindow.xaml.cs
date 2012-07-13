@@ -29,10 +29,12 @@ namespace CombatTracker
         {
             InitializeComponent();
             this.Loaded +=new RoutedEventHandler(MainWindow_Loaded);
-            this.listBox2.Drop += new DragEventHandler(ListBox_Drop);
-            this.listBox1.Drop += new DragEventHandler(ListBox_Drop);
-            this.listBox3.Drop += new DragEventHandler(ListBox_Drop);
-            
+            this.lbInitiative.Drop += new DragEventHandler(ListBox_Drop);
+            this.lbHolding.Drop += new DragEventHandler(ListBox_Drop);
+            this.lbReadied.Drop += new DragEventHandler(ListBox_Drop);
+            this.lbInitiative.SelectionChanged += new SelectionChangedEventHandler(CombatantList_SelectionChanged);
+            this.lbHolding.SelectionChanged += new SelectionChangedEventHandler(CombatantList_SelectionChanged);
+            this.lbReadied.SelectionChanged += new SelectionChangedEventHandler(CombatantList_SelectionChanged);
         }
 
         void ListBox_Drop(object sender, DragEventArgs e)
@@ -59,6 +61,8 @@ namespace CombatTracker
             {
                 ((CombatantControl)lbp.Items[i]).Position = i;
             }
+            cmb.lb.SelectedIndex = cmb.Position;
+            cmb.lb.Focus();
         }
 
 
@@ -73,10 +77,10 @@ namespace CombatTracker
             cc.MouseMove += new MouseEventHandler(c_MouseMove);
             cc.PreviewDrop += new DragEventHandler(c_PreviewDrop);
             cc.DeleteRequested += new CombatantControl.DeleteRequestedHandler(cc_DeleteRequested); ;
-            cc.lb = listBox1;
-            cc.Position = listBox1.Items.Count;
+            cc.lb = lbInitiative;
+            cc.Position = lbInitiative.Items.Count;
             cc.combatantListIndex = combatantList.Count;
-            this.listBox1.Items.Add(cc);
+            this.lbInitiative.Items.Add(cc);
             combatantList.Add(c);
         }
 
@@ -111,6 +115,7 @@ namespace CombatTracker
             CombatantControl c = sender as CombatantControl;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
+                c.lb.SelectedIndex = c.Position;
                 DataObject data = new DataObject();
                 data.SetData(DataFormats.StringFormat, c.CombatantName);
                 data.SetData("Object", c);
@@ -136,17 +141,24 @@ namespace CombatTracker
             }
         }
 
-        private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CombatantList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listBox1.SelectedIndex >= 0)
+            ListBox lb = sender as ListBox;
+            if (lb.SelectedIndex >= 0)
             {
-                CombatantControl cc = listBox1.SelectedItem as CombatantControl;
+
+                CombatantControl cc = lb.SelectedItem as CombatantControl;
                 Combatant c = combatantList[cc.combatantListIndex];
-                this.listBox4.Items.Clear();
-                foreach (Combatant.attribute item in c.attList)
-                {
-                    this.listBox4.Items.Add(item.att_name + " " + item.value.ToString());
-                }
+                DisplayCombatant(c);
+            }
+        }
+
+        private void DisplayCombatant(Combatant c)
+        {
+            this.lbAttributes.Items.Clear();
+            foreach (Combatant.attribute item in c.attList)
+            {
+                this.lbAttributes.Items.Add(item.att_name + " " + item.value.ToString());
             }
         }
     }
