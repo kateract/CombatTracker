@@ -35,8 +35,42 @@ namespace CombatTracker
             this.lbInitiative.SelectionChanged += new SelectionChangedEventHandler(CombatantList_SelectionChanged);
             this.lbHolding.SelectionChanged += new SelectionChangedEventHandler(CombatantList_SelectionChanged);
             this.lbReadied.SelectionChanged += new SelectionChangedEventHandler(CombatantList_SelectionChanged);
+            this.Closing += new System.ComponentModel.CancelEventHandler(MainWindow_Closing);
+            this.lbInitiative.GotFocus += new RoutedEventHandler(FocusChange);
+            this.lbHolding.GotFocus += new RoutedEventHandler(FocusChange);
+            this.lbReadied.GotFocus += new RoutedEventHandler(FocusChange);
         }
 
+        private void FocusChange(object sender, RoutedEventArgs e)
+        {
+            CombatantList_SelectionChanged(sender, e);
+        }
+
+        void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //do some cleanup
+            foreach (Combatant item in combatantList)
+            {
+                CombatantControl c = item.GetCombatantControl();
+                removeCombatant(c);
+            }
+            combatantList.Clear();
+        }
+        ~MainWindow()
+        {
+            //get rid of the circular dependancy created by the lb property
+            foreach (Combatant item in combatantList)
+            {
+                CombatantControl c = item.GetCombatantControl();
+                removeCombatant(c);
+            }
+            combatantList.Clear();
+            lbReadied.Items.Clear();
+            lbHolding.Items.Clear();
+            lbInitiative.Items.Clear();
+            lbPowers.Items.Clear();
+            lbAttributes.Items.Clear();
+        }
         void ListBox_Drop(object sender, DragEventArgs e)
         {
             ListBox lb = sender as ListBox;
@@ -96,6 +130,12 @@ namespace CombatTracker
         void removeCombatant(CombatantControl c)
         {
             c.lb.Items.RemoveAt(c.Position);
+            for (int i = c.Position; i < c.lb.Items.Count; i++)
+            {
+                CombatantControl d = c.lb.Items[i] as CombatantControl;
+                d.Position--;
+            }
+            c.lb = null;
         }
 
         void c_PreviewDrop(object sender, DragEventArgs e)
@@ -141,7 +181,7 @@ namespace CombatTracker
             }
         }
 
-        private void CombatantList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CombatantList_SelectionChanged(object sender, EventArgs e)
         {
             ListBox lb = sender as ListBox;
             if (lb.SelectedIndex >= 0)
