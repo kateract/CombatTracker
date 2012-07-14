@@ -158,13 +158,15 @@ namespace CombatTracker
             this.lbAttributes.Items.Clear();
             foreach (Combatant.attribute item in c.attList)
             {
-                this.lbAttributes.Items.Add(item.att_name + " " + item.value.ToString());
+                if (item.att_name.IndexOf(' ') < 0 && item.att_name.IndexOf('-') < 0 && item.att_name.IndexOf('_') < 0 || item.att_name.EndsWith("Defense"))
+                    this.lbAttributes.Items.Add(item.att_name + " " + item.value.ToString());
             }
+            this.lbPowers.Items.Clear();
             foreach (Combatant.power item in c.Powers)
             {
                 int num = lbPowers.Items.Count;
                 ListBoxItem lbi = new ListBoxItem();
-                lbi.Content = item.name;
+                lbi.Content = item.name + " " + item.action.ToString();
                 switch (item.PowerUsage)
                 {
                     case Combatant.power.PowerUsageType.ATWILL:
@@ -176,7 +178,7 @@ namespace CombatTracker
                         lbi.Foreground = Brushes.White;
                         break;
                     case Combatant.power.PowerUsageType.DAILY:
-                        lbi.Background = Brushes.DarkGray;
+                        lbi.Background = Brushes.Black;
                         lbi.Foreground = Brushes.White;
                         break;
                     default:

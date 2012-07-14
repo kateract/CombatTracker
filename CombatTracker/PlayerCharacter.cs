@@ -48,7 +48,7 @@ namespace CombatTracker
                                     }
                                     xtr.Read();
                                 }
-                                
+
                             }
                             if (xtr.Name == "RulesElement")
                             {
@@ -56,51 +56,59 @@ namespace CombatTracker
                                     pc.PlayerClass = xtr.GetAttribute("name");
                                 if (xtr.GetAttribute("type") == "Race")
                                     pc.PlayerRace = xtr.GetAttribute("name");
-                                if (xtr.GetAttribute("type") == "Power")
+                            }
+
+                            if (xtr.Name == "Power")
+                            {
+                                power p = new power();
+                                p.name = xtr.GetAttribute("name");
+                                xtr.Read();
+                                while (xtr.Name != "Power")
                                 {
-                                    power p = new power();
-                                    p.name = xtr.GetAttribute("name");
-                                    xtr.Read();
-                                    while (xtr.Name == "specific")
+                                    if (xtr.GetAttribute("name") == "Power Usage")
                                     {
-                                        if (xtr.GetAttribute("name") == "Power Usage")
-                                        {
-                                            xtr.Read();
-                                            if (xtr.NodeType == XmlNodeType.Text)
-                                            {
-                                                string s = xtr.Value.Trim();
-                                                switch (s[0])
-                                                {
-                                                    case 'A':
-                                                        p.PowerUsage = power.PowerUsageType.ATWILL;
-                                                        break;
-                                                    case 'E':
-                                                        p.PowerUsage = power.PowerUsageType.ENCOUNTER;
-                                                        break;
-                                                    case 'D':
-                                                        p.PowerUsage = power.PowerUsageType.DAILY;
-                                                        break;
-                                                    default:
-                                                        throw new NotImplementedException(s);
-                                                }
-                                            }
-                                        }
-                                        if (xtr.GetAttribute("name") == "Action Type")
+                                        xtr.Read();
+                                        if (xtr.NodeType == XmlNodeType.Text)
                                         {
                                             string s = xtr.Value.Trim();
+                                            switch (s[0])
+                                            {
+                                                case 'A':
+                                                    p.PowerUsage = power.PowerUsageType.ATWILL;
+                                                    break;
+                                                case 'E':
+                                                    p.PowerUsage = power.PowerUsageType.ENCOUNTER;
+                                                    break;
+                                                case 'D':
+                                                    p.PowerUsage = power.PowerUsageType.DAILY;
+                                                    break;
+                                                default:
+                                                    throw new NotImplementedException(s);
+                                            }
+                                        }
+                                    }
+                                    if (xtr.GetAttribute("name") == "Action Type")
+                                    {
+                                        xtr.Read();
+                                        string s = xtr.Value.Trim();
+                                        if (s.Length > 0)
+                                        {
                                             switch (s.Trim().Substring(0, s.IndexOf(' ')))
                                             {
                                                 case "Move":
+                                                    p.action = ActionType.MOVE;
                                                     break;
                                                 case "Minor":
+                                                    p.action = ActionType.MINOR;
                                                     break;
                                                 case "Standard":
+                                                    p.action = ActionType.STANDARD;
                                                     break;
                                                 case "Immediate":
-                                                    string y = s.Substring(s.Trim().IndexOf(' '), s.Trim().Substring(0, s.IndexOf(' ')).IndexOf(' ') >= 0 ? s.Trim().Substring(0, s.IndexOf(' ')).IndexOf(' ') : s.Trim().Substring(0, s.IndexOf(' ')).Length);
-                                                    if (y == "Interrupt")
+                                                    string y = s.Substring(s.Trim().IndexOf(' '), s.Trim().Substring(0, s.IndexOf(' ')).IndexOf(' ') >= 0 ? s.Trim().Substring(0, s.IndexOf(' ')).IndexOf(' ') : s.Trim().Substring(0, s.IndexOf(' ')).Length).Trim();
+                                                    if (y.Substring(0,3) == "Int")
                                                         p.action = ActionType.INTERRUPT;
-                                                    else if (y == "Reaction")
+                                                    else if (y.Substring(0,3) == "Rea")
                                                         p.action = ActionType.REACTION;
                                                     else
                                                         throw new NotImplementedException(s);
@@ -110,24 +118,25 @@ namespace CombatTracker
 
                                             }
                                         }
-                                        xtr.Read();
                                     }
-                                    pc.Powers.Add(p);
-                                    
+                                    xtr.Read();
                                 }
+                                pc.Powers.Add(p);
+
                             }
+
 
                             break;
                         case XmlNodeType.EndElement:
-                            if (xtr.Name  == "Stat")
+                            if (xtr.Name == "Stat")
                             {
                                 pc.attList.Add(at);
                                 at = new attribute();
                             }
                             break;
-                            
-                    }
 
+                    }
+                
                 }
 
                 
