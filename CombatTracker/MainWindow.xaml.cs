@@ -64,12 +64,20 @@ namespace CombatTracker
                 CombatantControl c = item.GetCombatantControl();
                 removeCombatant(c);
             }
-            combatantList.Clear();
-            lbReadied.Items.Clear();
-            lbHolding.Items.Clear();
-            lbInitiative.Items.Clear();
-            lbPowers.Items.Clear();
-            lbAttributes.Items.Clear();
+            try
+            {
+                combatantList.Clear();
+                lbReadied.Items.Clear();
+                lbHolding.Items.Clear();
+                lbInitiative.Items.Clear();
+                lbPowers.Items.Clear();
+                lbAttributes.Items.Clear();
+            }
+            catch
+            {
+ 
+            }
+           
         }
         void ListBox_Drop(object sender, DragEventArgs e)
         {
