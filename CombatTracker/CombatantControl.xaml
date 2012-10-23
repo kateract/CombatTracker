@@ -8,11 +8,11 @@
         <Rectangle Height="82" Name="rectangle1" Stroke="Black" Width="243" RadiusX="10" RadiusY="10" Canvas.Left="-186" Canvas.Top="0" />
         <Label Content="Combatant " Height="43" HorizontalAlignment="Left" Name="lblName" VerticalAlignment="Top" Width="189" FontWeight="Bold" FontSize="18" />
         <Label Content="Human Rogue" Height="28" HorizontalAlignment="Left" Margin="0,19,0,0" Name="lblRaceClass" VerticalAlignment="Top" Width="189" />
-        <Canvas Height="82" HorizontalAlignment="Left" Margin="186,0,0,0" Name="canvas1" VerticalAlignment="Top" Width="57">
-            <Label Canvas.Left="0" Canvas.Top="0" Content="555" Height="43" Name="lblCurHP" FontSize="30" Padding="0" Width="57" HorizontalContentAlignment="Center" />
-            <Label Canvas.Left="0" Canvas.Top="33" Content="555" FontSize="30" Height="43" HorizontalContentAlignment="Center" Name="lblMaxHP" Padding="0" Width="57" Foreground="DarkGray" />
+        <Canvas Height="80" HorizontalAlignment="Left" Margin="186,1,1,1" Name="canvas1" VerticalAlignment="Top" Width="56">
+            <Label Canvas.Left="0" Canvas.Top="0" Content="555" Height="43" Name="lblCurHP" FontSize="30" FontWeight="Bold"  Padding="0" Width="57" HorizontalContentAlignment="Center" />
+            <Label Canvas.Left="0" Canvas.Top="33" Content="555" FontSize="30" Height="43" HorizontalContentAlignment="Center" Name="lblMaxHP" Padding="0" Width="57" Foreground="Black" />
             <Canvas.Clip>
-                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,57,82" />
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,56,80" />
            </Canvas.Clip>
         </Canvas>
     </Grid>

@@ -75,7 +75,25 @@ namespace CombatTracker
                 lblRaceClass.Content = _keywords;
             }
         }
-        
+
+        private bool _bloodied;
+        public bool Bloodied
+        {
+            set
+            {
+                _bloodied = value;
+                if (_bloodied)
+                {
+                    canvas1.Background = Brushes.Tomato;
+                }
+                else
+                {
+                    canvas1.Background = Brushes.Transparent;
+                }
+            }
+        }
+
+
         public ListBox lb;
         public CombatantControl()
         {
@@ -90,9 +108,16 @@ namespace CombatTracker
             
         }
         public int combatantListIndex;
+
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            DeleteRequested(this, e);
+            MenuItem m = sender as MenuItem;
+            switch (m.Header.ToString())
+            {
+                case "Delete":
+                    DeleteRequested(this, e);
+                    break;
+            }
         }
         public event DeleteRequestedHandler DeleteRequested;
         public delegate void DeleteRequestedHandler(object sender, EventArgs e);

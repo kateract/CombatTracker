@@ -1,8 +1,39 @@
 ﻿<Window x:Class="CombatTracker.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="719" Width="1095">
-    <Grid>
+        Title="MainWindow" Height="719" Width="Auto" MinWidth="1024">
+    <Grid UseLayoutRounding="False">
+        <Border BorderBrush="Black" BorderThickness="1" Height="598" HorizontalAlignment="Left" Margin="609,70,0,0" Name="border1" VerticalAlignment="Top" Width="452">
+            <Canvas Name="canvas1" Height="619">
+                <ListBox Height="230" Name="lbPowers" Width="246.25" Canvas.Left="198.75" Canvas.Top="121" />
+                <ListBox Height="230" Name="lbAttributes" Width="245.25" Canvas.Left="198.75" Canvas.Top="357" />
+                <Label Canvas.Left="6" Canvas.Top="6" Content="No Combatant Selected" Height="48" Name="lblName" Width="302" FontSize="26" />
+                <Label Canvas.Left="10" Canvas.Top="57.5" Content="HP" Height="48.75" Name="lblHPTitle" Width="57" FontSize="30" HorizontalContentAlignment="Center" />
+                <Label Canvas.Left="10" Canvas.Top="112.5" Content="999" FontSize="30" Height="48.75" Name="lblCurrentHP" Width="57" HorizontalContentAlignment="Center" />
+                <Label Canvas.Left="10" Canvas.Top="167.5" Content="999" FontSize="30" Height="48.75" Name="lblMaxHP" Width="57" HorizontalContentAlignment="Center" />
+                <Label Canvas.Left="72.5" Canvas.Top="57.5" Content="TH" FontSize="30" Height="48.75" HorizontalContentAlignment="Center" Name="lblTHPTitle" Width="57" />
+                <Label Canvas.Left="72.5" Canvas.Top="112.5" Content="999" FontSize="30" Height="48.75" HorizontalContentAlignment="Center" Name="lblTempHP" Width="57" />
+                <Label Canvas.Left="135" Canvas.Top="57.5" Content="HS" FontSize="30" Height="48.75" HorizontalContentAlignment="Center" Name="lblHealingSurgeTitle" Width="57" />
+                <Label Canvas.Left="135" Canvas.Top="112.5" Content="999" FontSize="30" Height="48.75" HorizontalContentAlignment="Center" Name="lblCurrentSurges" Width="57" />
+                <Label Canvas.Left="135" Canvas.Top="167.5" Content="999" FontSize="30" Height="48.75" HorizontalContentAlignment="Center" Name="lblMaxSurges" Width="57" />
+                <TextBox Canvas.Left="10" Canvas.Top="227.5" Height="43.5" Name="txtDamage" Width="57" Text="" FontSize="30" />
+                <TextBox Canvas.Left="135" Canvas.Top="227.5" Height="43.5" Name="txtHeal" Width="57" Text="" FontSize="30" />
+                <TextBox Canvas.Left="72.5" Canvas.Top="227.5" Height="43.5" Name="txtTemps" Width="57" Text="" FontSize="30" />
+                <Button Canvas.Left="10" Canvas.Top="277.5" Content="Damage" Height="44.5" Name="btnDamage" Width="57" Click="btnDamage_Click" />
+                <Button Canvas.Left="72.5" Canvas.Top="277.5" Content="Set" Height="44.5" Name="btnSetTemps" Width="57" Click="btnSetTemps_Click" />
+                <Button Canvas.Left="135" Canvas.Top="277.5" Content="Heal" Height="44.5" Name="btnHeal" Width="57" Click="btnHeal_Click" />
+                <CheckBox Canvas.Left="135" Canvas.Top="353.75" Content="Spend" Height="16.25" Name="cbxSpendSurge" Width="57" IsChecked="True" />
+                <CheckBox Canvas.Left="135" Canvas.Top="376.25" Content="+Value" Height="16.25" Name="cbxAddSurgeValue" Width="57" IsChecked="True" />
+                <Label Canvas.Left="135" Canvas.Top="328" Content="Surge" Height="28.75" Name="lblSurgeTitle" Width="57" />
+                <Button Canvas.Left="10" Canvas.Top="328" Content="-1" Height="44.5" Name="btnDamage1" Width="57" FontSize="30" Click="btnDamage1_Click" />
+                <Button Canvas.Left="72.5" Canvas.Top="328" Content="-5" Height="44.5" Name="btnDamage5" Width="57" FontSize="30" Click="btnDamage5_Click" />
+                <Button Canvas.Left="10" Canvas.Top="376.25" Content="-10" Height="44.5" Name="btnDamage10" Width="57" FontSize="30" Click="btnDamage10_Click" />
+                <Button Canvas.Left="72.5" Canvas.Top="376.25" Content="-20" Height="44.5" Name="btnDamage20" Width="57" FontSize="30" Click="btnDamage20_Click" />
+                <ListBox Canvas.Left="10" Canvas.Top="455" Height="132.5" Name="lbEffectList" Width="182" />
+                <Button Canvas.Left="117" Canvas.Top="426.25" Content="Add Effect" Height="22.5" Name="btnAddEffect" Width="75" />
+                <Label Canvas.Left="6" Canvas.Top="424.52" Content="Effect List" Height="27.5" Name="lblEffectListTitle" Width="105" />
+            </Canvas>
+        </Border>
         <ListBox Height="598" HorizontalAlignment="Left" Margin="12,70,0,0" Name="lbInitiative" VerticalAlignment="Top" Width="276" AllowDrop="True" />
         <ListBox AllowDrop="True" Height="272" HorizontalAlignment="Left" Margin="319,70,0,0" Name="lbHolding" VerticalAlignment="Top" Width="268" />
         <ListBox Height="269" HorizontalAlignment="Left" Margin="319,399,0,0" Name="lbReadied" VerticalAlignment="Top" Width="268" AllowDrop="True" />
@@ -12,14 +43,17 @@
                 <Separator />
                 <MenuItem Header="Exit"  Click="MenuItem_Click" />
             </MenuItem>
+            <MenuItem Header="Combat">
+                <MenuItem Header="Clear" Click="MenuItem_Click" />
+                <MenuItem Header="Reset" Click="MenuItem_Click" />
+            </MenuItem>
             <MenuItem Header="Help" />
         </Menu>
 
         <Label Content="Holding" Height="28" HorizontalAlignment="Left" Margin="319,36,0,0" Name="label1" VerticalAlignment="Top" />
         <Label Content="Readied" Height="28" HorizontalAlignment="Left" Margin="319,365,0,0" Name="label2" VerticalAlignment="Top" />
         <Label Content="Initiative" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="label3" VerticalAlignment="Top" />
-        <ListBox Height="230" HorizontalAlignment="Left" Margin="798,301,0,0" Name="lbAttributes" VerticalAlignment="Top" Width="263" />
-        <ListBox Height="230" HorizontalAlignment="Left" Margin="798,70,0,0" Name="lbPowers" VerticalAlignment="Top" Width="263" />
+        <Button Content="Start" Height="23" HorizontalAlignment="Left" Margin="213,36,0,0" Name="btnInitiativeNext" VerticalAlignment="Top" Width="75" Click="btnInitiativeNext_Click" />
     </Grid>
 
 </Window>

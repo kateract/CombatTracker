@@ -57,6 +57,10 @@ namespace CombatTracker
             set { 
                 _curHP = value;
                 _control.CurrentHP = value;
+                if (_curHP > BloodiedValue)
+                    _control.Bloodied = false;
+                else
+                    _control.Bloodied = true;
             }
         }
 
@@ -120,24 +124,43 @@ namespace CombatTracker
             get { return _hsBonus + (BloodiedValue / 2); }
         }
 
+        public void DamageCombatant(int amount)
+        {
+            if (amount > CurrentTempHP)
+            {
+                amount -= CurrentTempHP;
+                CurrentTempHP = 0;
+            }
+            else
+            {
+                CurrentTempHP -= amount;
+                amount = 0;
+            }
+            CurrentHP -= amount;
+        }
+
+        public void SetTemps(int amount)
+        {
+            if (amount > CurrentTempHP)
+                CurrentTempHP = amount;
+        }
+
+        public void HealCombatant(int amount, bool addSurgeValue, bool spendHealingSurge)
+        {
+            if (addSurgeValue)
+                amount += HealingSurgeValue + HealingSurgeBonus;
+            if (spendHealingSurge)
+                CurrentHealingSurges--;
+            if (CurrentHP < 0 && amount > 0)
+                CurrentHP = 0;
+            CurrentHP += amount;
+            if (CurrentHP > MaxHP)
+                CurrentHP = MaxHP;
+        }
+
         public List<attribute> attList = new List<attribute>();
 
-        
-        public enum Condition
-        {
-            BLOODIED,
-            PRONE,
-            BLIND,
-            IMMOBILIZED,
-            RESTRAINED,
-            GRAPPLED,
-            SLOWED,
-            DAZED,
-            STUNNED,
-            UNCONCIOUS,
-            DYING,
-            HELPLESS
-        }
+        public EffectList effects = new EffectList();
 
         public Combatant()
         {
@@ -193,5 +216,14 @@ namespace CombatTracker
             REACTION,
             INTERRUPT
         }
+
+        public delegate void TurnEndingHandler(Combatant sender);
+        public event TurnEndingHandler TurnEnding;
+
+        public delegate void TurnStartingHandler(Combatant sender);
+        public event TurnStartingHandler TurnStarting;
+
+
+
     }
 }
